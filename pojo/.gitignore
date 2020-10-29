@@ -1,3 +1,6 @@
+/.DS_Store
+.DS_Store
+
 # Build and Release Folders
 target/
 
@@ -11,8 +14,5 @@ target/
 *.ipa
 *.apk
 *.mov
-*.DS_Store
-
-/.DS_Store
-.DS_Store
+*.json
 
