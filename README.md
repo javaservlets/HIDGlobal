@@ -2,17 +2,17 @@
 
 # HID Global Authentication Node
 
-The HID Global Authentication Node allows ForgeRock users to integrate their AM instance with HID Global smart, physical card reader (the below uses as reference the "Omnikey 5x27"); the first part uses a stand-alone java client that updates a ForgeRock named user's record with the value of his/her RF ID smart card; the second part then uses said value as part of this Authentication Tree described here.
+The HID Global Authentication Node allows ForgeRock users to integrate their AM instance with HID Global smart, physical card reader; the first part uses a stand-alone java client that updates a ForgeRock named user's record with the value of his/her HID smart card; the second part then uses said value as part of this Authentication Tree described here.
 
 This document assumes that you already have:
-> 1. an AM 6.5+ instance running with a user base configured
-> 2. a HID Global physical card reader
+> 1. a ForgeRock Access Manager (AM) 7+ instance running with a user base configured
+> 2. a HID Global physical card reader (reference platform "Omnikey 5x27")
 > 3. installed the Queue Reader Node (https://github.com/javaservlets/QueueReader) and set it's Attribute Name to 'headless' 
 
 ## Configuration in HID Global
 
 1. On a machine connected to the card reader, navigate to 192.168.63.99 and configure your card reader to send the Card Out Event Keystroke of "[CTRL]M"
- ![image alt text](./node/images/1.png)
+ ![image alt text](./node/images/hidconf.png)
 
 2. From a command line run the HID Global stand-alone as described in the [java client Read Me](./pojo/readme.md)
 
@@ -20,7 +20,7 @@ This document assumes that you already have:
 
 The HID Global Auth node is packaged as a jar file; you can either use the maven build tool ('mvn clean install') from the sources here, or use download the pre-built jar from the releases tab at https://github.com/javaservlets/HID Global/releases/latest.
 
-You then will need to deploy into the ForgeRock Access Management (AM)6.5+ application WEB-INF/lib folder which is running on a tomcat server.
+You then will need to deploy into the AM 7+ application WEB-INF/lib folder which is running on a tomcat server.
 
 
 1. In a new browser window login into the AM console as an administrator and go to `Realms > Top Level Real > Authentication > Trees`.
