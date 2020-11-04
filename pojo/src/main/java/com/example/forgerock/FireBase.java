@@ -27,10 +27,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
-public class FireBase {
+public class FireBase
+{
     private FirebaseDatabase firebaseDatabase;
+    static String firebase_url = "https://forgerock-51592.firebaseio.com";
 
-    public FireBase(final String firebase_url) {
+    public FireBase() {
         try { //std firebase access
             FileInputStream serviceAccount = new FileInputStream("account-services.json");
             FirebaseOptions options = new FirebaseOptions.Builder()
