@@ -33,6 +33,7 @@ public class BadgeScanner {
     // '-headless' will write to a static key called 'headless' for 'touch and go' (ie, no username is provided)
 
     public static void badgeTap() {
+        firebase = new FireBase();
         final long timeInterval = 2000;
         Scanner console = new Scanner(System.in);
         BADGE_ID = console.next();
