@@ -23,7 +23,7 @@ import javax.inject.Inject;
 public class BadgeScan extends AbstractDecisionNode {
     private final Config config;
     private final Logger logger = LoggerFactory.getLogger(BadgeScan.class);
-    private String realm;
+    private final String realm;
 
 
     public interface Config {
@@ -34,6 +34,7 @@ public class BadgeScan extends AbstractDecisionNode {
 
     @Inject
     public BadgeScan(@Assisted Config config, @Assisted Realm realm) {
+        log("Badge Scanning initializing");
         this.config = config;
         this.realm = realm.toString();
     }
@@ -51,11 +52,10 @@ public class BadgeScan extends AbstractDecisionNode {
         Set<String> userAliasSet = new HashSet<>();
         userAliasSet.add(config.attributeName());
 
-        // param 1: *value* of attribute to search for; param 2: realm; param 3: name of the attribute to search on
-        AMIdentity username = getIdentity(qValue, userAliasSet);
+        AMIdentity username = getIdentity("'" + qValue + "'", userAliasSet);
 
         if (username == null) {
-            log("No user found with that badge value");
+            log("No user found with badge value: " + userAliasSet + "=" + qValue);
             return goTo(false).build();
         } else {
             log("Found a badge id matching user: " + username.getName());
@@ -65,13 +65,14 @@ public class BadgeScan extends AbstractDecisionNode {
         }
     }
 
+    // param 1: *value* of attribute to search for; param 2: realm; param 3: name of the attribute to search on
     @VisibleForTesting
     AMIdentity getIdentity(String qValue, Set<String> userAliasSet) {
         return IdUtils.getIdentity(qValue, this.realm, userAliasSet);
     }
 
     private void log(String str) {
-        logger.debug("log msg: " + str + "\r\n");
+        logger.debug("+++ HID msg: " + str + "\r\n");
     }
 
 

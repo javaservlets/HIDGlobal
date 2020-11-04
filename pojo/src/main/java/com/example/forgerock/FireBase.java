@@ -25,22 +25,20 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.concurrent.CountDownLatch;
 
-public class BadgeTap {
-    private static final String DATABASE_URL = "https://forgerock-51592.firebaseio.com"; //todo put this in a props file
+public class FireBase {
     private FirebaseDatabase firebaseDatabase;
 
-    public BadgeTap() {
+    public FireBase(final String firebase_url) {
         try { //std firebase access
             FileInputStream serviceAccount = new FileInputStream("account-services.json");
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl(DATABASE_URL)
+                    .setDatabaseUrl(firebase_url)
                     .build();
             FirebaseApp.initializeApp(options);
-            firebaseDatabase = FirebaseDatabase.getInstance(DATABASE_URL);
+            firebaseDatabase = FirebaseDatabase.getInstance(firebase_url);
 
         } catch (IOException ioe) {
             System.out.println("+++ ERROR: do not proceed until your firebase credentials work (" + ioe.getMessage());
@@ -79,9 +77,7 @@ public class BadgeTap {
 
     public void close() {
         System.out.println("closed...");
-
         firebaseDatabase.getApp().delete();
     }
-
 
 }

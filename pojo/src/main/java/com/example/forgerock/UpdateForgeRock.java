@@ -31,15 +31,15 @@ import java.io.IOException;
 // httpPost to a user's FR profile the hex value of badge (and store it in the sunIdentityMSISDNNumber attribute)
 // (see 'to do' comments given some of the hard-coded values here
 
-public class UpdateFRuser {
-    private static String serveraddress = "http://iot.freng.org:8080";
+public class UpdateForgeRock {
+    //private static String serveraddress = "http://iot.freng.org:8080"; //rj? pass in
 
-    public static String getToken() { //start by 'simply' getting an access toke(n) / tokenID
+    public static String getToken(String server) { //start by 'simply' getting an access toke(n) / tokenID
         String cook = "";
         try {
             HttpClient httpclient = HttpClients.createDefault();
             //httpclient.getParams().setParameter(ClientPNames.COOKIE_POLICY, CookiePolicy.IGNORE_COOKIES);
-            HttpPost http = new HttpPost(serveraddress + "/openam/json/realms/root/authenticate");
+            HttpPost http = new HttpPost(server + "/openam/json/realms/root/authenticate");
             http.setHeader("X-OpenAM-Username", "amadmin");
             http.setHeader("X-OpenAM-Password", "password");
             http.setHeader("Content-Type", "application/json");
@@ -65,11 +65,12 @@ public class UpdateFRuser {
     }
 
     // now that we have a tokenID, update the usr's record with an attribute for the badge ID/hex value
-    public static String updateAttribute(String usr, String badgeId, String toke) {
+    public static String updateAttribute(String server, String usr, String badgeId) {
+        String toke = getToken(server);
         String str = "";
         try {
             HttpClient httpclient = HttpClients.createDefault();
-            HttpPut http = new HttpPut(serveraddress + "/openam/json/realms/root/users/" + usr); //todo pass in server instance
+            HttpPut http = new HttpPut(server + "/openam/json/realms/root/users/" + usr); //todo pass in server instance
             http.setHeader("X-Requested-With", "XMLHttpRequest");
             http.setHeader("Connection", "keep-alive");
             http.setHeader("Content-Type", "application/json");
