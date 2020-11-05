@@ -7,7 +7,6 @@ target/
 
 # Executables
 *.iml
-*.class
 *.ipa
 *.apk
 *.mov
