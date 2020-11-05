@@ -2,7 +2,6 @@
 .DS_Store
 
 # Build and Release Folders
-target/
 
 # Other files and folders
 .settings/
@@ -10,7 +9,6 @@ target/
 
 # Executables
 *.iml
-*.class
 *.ipa
 *.apk
 *.mov
